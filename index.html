@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Simulation Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555555;
+        }
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .log-box {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>iMessage Spammer</h2>
+    
+    <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" placeholder="+1 (555) 000-0000">
+    </div>
+
+    <div class="form-group">
+        <label for="email">iCloud Address (Alternative)</label>
+        <input type="email" id="email" placeholder="example@icloud.com">
+    </div>
+
+    <div class="form-group">
+        <label for="volume">Messages per Second</label>
+        <select id="volume">
+            <option value="10">10 alerts</option>
+            <option value="100">100 alerts</option>
+            <option value="1000">1,000 alerts (Standard Rate Cap)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="duration">Duration of Spam</label>
+        <select id="duration">
+           <option value="10">10 seconds</option>
+            <option value="60">60 seconds</option>
+            <option value="300">300 seconds</option>
+        </select>
+    </div>
+
+    <button class="btn" onclick="simulateDispatch()">Run Simulation</button>
+
+    <div class="log-box" id="log">System idle. Ready for user execution.</div>
+</div>
+
+<script>
+    function simulateDispatch() {
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const volume = document.getElementById('volume').value;
+        const duration = document.getElementById('duration').value;
+        const log = document.getElementById('log');
+
+        if (!phone && !email) {
+            log.innerHTML = "Error: Please provide either a phone number or iCloud.";
+            return;
+        }
+
+        // Calculate safe processing rate
+        const ratePerSecond = (volume / duration).toFixed(2);
+        
+        log.innerHTML = `Simulation Started:<br>` +
+                        `Target: ${phone || email}<br>` +
+                        `Configured Batch: ${volume} messages over ${duration}s.<br>` +
+                        `Controlled Delivery Rate: ${ratePerSecond} messages/sec.`;
+    }
+</script>
+
+</body>
+</html>
